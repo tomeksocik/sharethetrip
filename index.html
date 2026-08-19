@@ -18,6 +18,8 @@ a.card { display:block; background:var(--card); border:1px solid var(--line);
   border-radius:12px; padding:1rem 1.15rem; margin-bottom:.75rem;
   text-decoration:none; color:var(--ink); }
 a.card span { display:block; color:var(--muted); font-size:.9rem; margin-top:.15rem; }
+a.badge { display:inline-block; margin:0 4px 2rem; }
+a.badge img { display:block; height:40px; width:auto; }
 footer { margin-top:3rem; color:var(--muted); font-size:.85rem; }
 footer a { color:var(--accent); }
 </style>
@@ -28,12 +30,24 @@ footer a { color:var(--accent); }
 <p class="lead">Rozliczanie kosztów wspólnej podróży na iPhone.</p>
 <!-- App Store: odkomentuj i podmień 0000000000 na App ID po zatwierdzeniu
      aplikacji (punkt checklisty #59 w repozytorium ExpenseSplitter).
-     Karta stoi tu, a nie niżej, bo po publikacji to jest powód, dla którego
-     ktoś tu trafia; dokumenty prawne są tłem. Ukryta do tego czasu celowo -
-     strona nie ma obiecywać pobrania, którego nie da się wykonać. Ten sam
-     wzorzec co `AppStoreLinks.appURL` w aplikacji: dopóki nie ma ID, wejście
-     się nie renderuje.
-<a class="card" href="https://apps.apple.com/pl/app/id0000000000">Pobierz w App Store<span>Download on the App Store</span></a>
+     Stoi tu, a nie niżej, bo po publikacji to jest powód, dla którego ktoś tu
+     trafia; dokumenty prawne są tłem. Ukryte do tego czasu celowo - strona nie
+     ma obiecywać pobrania, którego nie da się wykonać. Ten sam wzorzec co
+     `AppStoreLinks.appURL` w aplikacji: dopóki nie ma ID, wejście się nie
+     renderuje.
+
+     Oba pliki to ORYGINALNE odznaki Apple (Marketing Resources, wariant
+     polski, 119,66×40). Nie wolno ich przerysowywać, przekolorowywać ani
+     ściskać - wytyczne Apple dopuszczają wyłącznie skalowanie z zachowaniem
+     proporcji, przy wysokości nie mniejszej niż 40 px na ekranie i wolnym
+     marginesem co najmniej 1/10 wysokości dookoła (stąd `margin` w .badge).
+     Dwa warianty, bo czarna odznaka ginie na ciemnym tle strony.
+<a class="badge" href="https://apps.apple.com/pl/app/id0000000000">
+  <picture>
+    <source srcset="/appstore-pl-white.svg" media="(prefers-color-scheme: dark)">
+    <img src="/appstore-pl-black.svg" alt="Pobierz w App Store" width="120" height="40">
+  </picture>
+</a>
 -->
 <a class="card" href="/privacy/">Polityka prywatności<span>Privacy Policy</span></a>
 <a class="card" href="/terms/">Warunki korzystania<span>Terms of Use</span></a>
