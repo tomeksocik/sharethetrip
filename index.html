@@ -4,6 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Share the Trip</title>
+<meta name="description" content="Split the cost of a trip with friends, on iPhone.">
+<!-- Dane strukturalne (schema.org, JSON-LD). Mówią wyszukiwarce, że to strona
+     APLIKACJI na iOS, a nie blog o podróżach.
+
+     ⚠️ Czego tu świadomie NIE MA i dlaczego: `offers`, `installUrl`
+     i `aggregateRating`. Bogaty wynik Google dla aplikacji wymaga oceny albo
+     recenzji (patrz dokumentacja „Software App"), a aplikacji nie ma jeszcze
+     w App Store - więc ocen nie ma. Wpisanie zmyślonych kończy się ręczną karą,
+     a nie lepszą pozycją. Do dnia publikacji ten blok opisuje więc encję
+     poprawnie, po prostu nie kwalifikuje się do bogatego wyniku.
+
+     W DNIU PUBLIKACJI dopisać (punkt checklisty #59): `installUrl` z linkiem
+     App Store, `offers` z ceną 0 PLN, a `aggregateRating` dopiero wtedy, gdy
+     w App Store faktycznie pojawią się oceny - nie wcześniej. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "MobileApplication",
+      "@id": "https://sharethetrip.pl/#app",
+      "name": "Share the Trip",
+      "description": "Split the cost of a trip with friends, on iPhone.",
+      "applicationCategory": ["TravelApplication", "FinanceApplication"],
+      "operatingSystem": "iOS",
+      "inLanguage": ["pl", "en", "de", "es", "it", "fr"],
+      "author": { "@id": "https://sharethetrip.pl/#author" },
+      "publisher": { "@id": "https://sharethetrip.pl/#author" },
+      "url": "https://sharethetrip.pl/"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sharethetrip.pl/#author",
+      "name": "Tomasz Socik",
+      "email": "support@sharethetrip.pl"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sharethetrip.pl/#website",
+      "name": "Share the Trip",
+      "url": "https://sharethetrip.pl/",
+      "inLanguage": ["en", "pl"],
+      "publisher": { "@id": "https://sharethetrip.pl/#author" },
+      "about": { "@id": "https://sharethetrip.pl/#app" }
+    }
+  ]
+}
+</script>
 <style>
 :root { color-scheme: light dark; --ink:#1c1b18; --muted:#6b6a66; --bg:#fcfbf8;
   --card:#fff; --line:#e5e3dd; --accent:#0f5a3e; }
