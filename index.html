@@ -20,8 +20,9 @@ a.card { display:block; background:var(--card); border:1px solid var(--line);
 /* Drugi wiersz karty to ta sama nazwa w drugim języku - stąd `span + span`,
    nie `span`: od czasu przełącznika oba wiersze są elementami. */
 a.card span + span { display:block; color:var(--muted); font-size:.9rem; margin-top:.15rem; }
-a.badge { display:inline-block; margin:0 4px 2rem; }
-a.badge img { display:block; height:40px; width:auto; }
+.badge { display:inline-block; margin:0 4px .6rem; }
+.badge img { display:block; height:40px; width:auto; }
+p.soon { color:var(--muted); font-size:.85rem; margin:0 4px 2.5rem; }
 footer { margin-top:3rem; color:var(--muted); font-size:.85rem; }
 footer a { color:var(--accent); }
 /* Przełącznik języka: para przycisków w rogu, nie lista rozwijana - dwa języki
@@ -42,13 +43,13 @@ nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink);
 <h1>Share the Trip</h1>
 <p class="lead" data-en="Split the cost of a trip with friends, on iPhone."
    data-pl="Rozliczanie kosztów wspólnej podróży na iPhone.">Split the cost of a trip with friends, on iPhone.</p>
-<!-- App Store: odkomentuj i podmień 0000000000 na App ID po zatwierdzeniu
-     aplikacji (punkt checklisty #59 w repozytorium ExpenseSplitter).
-     Stoi tu, a nie niżej, bo po publikacji to jest powód, dla którego ktoś tu
-     trafia; dokumenty prawne są tłem. Ukryte do tego czasu celowo - strona nie
-     ma obiecywać pobrania, którego nie da się wykonać. Ten sam wzorzec co
-     `AppStoreLinks.appURL` w aplikacji: dopóki nie ma ID, wejście się nie
-     renderuje.
+<!-- ⚠️ W DNIU PUBLIKACJI (punkt checklisty #59 w repozytorium ExpenseSplitter):
+     opakować `div.badge` w `<a href="https://apps.apple.com/app/idAPP_ID">`
+     i usunąć `p.soon` niżej. Do tego czasu odznaka jest CELOWO nieklikalna:
+     link do nieistniejącego ID kończy się błędem App Store, a wytyczne Apple
+     wiążą tę odznakę z aplikacją, którą da się pobrać. Dopisek „Wkrótce"
+     to decyzja właściciela z 19.08.2026 - świadomie pokazujemy odznakę
+     wcześniej, żeby strona mówiła, co powstaje.
 
      Cztery pliki, bo odznaka ma napis W JĘZYKU: `appstore-{en,pl}-{black,white}.svg`.
      To ORYGINALNE assety Apple (Marketing Resources, 119,66×40) - nie wolno ich
@@ -56,14 +57,15 @@ nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink);
      skalowanie z zachowaniem proporcji, przy wysokości nie mniejszej niż 40 px
      i wolnym marginesem co najmniej 1/10 wysokości dookoła (stąd `margin`
      w .badge). Wariant czarny/biały wybiera `<picture>` po motywie systemu,
-     wariant językowy podmienia skrypt na dole - `id="badge"` jest tam po to.
-<a class="badge" id="badge" href="https://apps.apple.com/app/id0000000000">
+     wariant językowy podmienia skrypt na dole - `id="badge"` jest tam po to. -->
+<div class="badge" id="badge">
   <picture>
     <source srcset="/appstore-en-white.svg" media="(prefers-color-scheme: dark)">
     <img src="/appstore-en-black.svg" alt="Download on the App Store" width="120" height="40">
   </picture>
-</a>
--->
+</div>
+<p class="soon" data-en="Coming soon to the App Store"
+   data-pl="Wkrótce w App Store">Coming soon to the App Store</p>
 <a class="card" href="/privacy/"><span data-en="Privacy Policy" data-pl="Polityka prywatności">Privacy Policy</span><span
    data-en="Polityka prywatności" data-pl="Privacy Policy">Polityka prywatności</span></a>
 <a class="card" href="/terms/"><span data-en="Terms of Use" data-pl="Warunki korzystania">Terms of Use</span><span
