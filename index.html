@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,17 +17,31 @@ p.lead { color:var(--muted); margin:0 0 2.5rem; }
 a.card { display:block; background:var(--card); border:1px solid var(--line);
   border-radius:12px; padding:1rem 1.15rem; margin-bottom:.75rem;
   text-decoration:none; color:var(--ink); }
-a.card span { display:block; color:var(--muted); font-size:.9rem; margin-top:.15rem; }
+/* Drugi wiersz karty to ta sama nazwa w drugim języku - stąd `span + span`,
+   nie `span`: od czasu przełącznika oba wiersze są elementami. */
+a.card span + span { display:block; color:var(--muted); font-size:.9rem; margin-top:.15rem; }
 a.badge { display:inline-block; margin:0 4px 2rem; }
 a.badge img { display:block; height:40px; width:auto; }
 footer { margin-top:3rem; color:var(--muted); font-size:.85rem; }
 footer a { color:var(--accent); }
+/* Przełącznik języka: para przycisków w rogu, nie lista rozwijana - dwa języki
+   nie potrzebują menu, a widoczna para od razu mówi, że polski w ogóle jest. */
+nav.lang { display:flex; justify-content:flex-end; gap:.35rem; margin:0 0 1.5rem; }
+nav.lang button { font:inherit; font-size:.85rem; line-height:1; cursor:pointer;
+  padding:.35rem .6rem; border-radius:999px; border:1px solid var(--line);
+  background:transparent; color:var(--muted); }
+nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink); }
 </style>
 </head>
 <body>
 <main>
+<nav class="lang" aria-label="Language">
+  <button type="button" data-lang="en" lang="en">English</button>
+  <button type="button" data-lang="pl" lang="pl">Polski</button>
+</nav>
 <h1>Share the Trip</h1>
-<p class="lead">Rozliczanie kosztów wspólnej podróży na iPhone.</p>
+<p class="lead" data-en="Split the cost of a trip with friends, on iPhone."
+   data-pl="Rozliczanie kosztów wspólnej podróży na iPhone.">Split the cost of a trip with friends, on iPhone.</p>
 <!-- App Store: odkomentuj i podmień 0000000000 na App ID po zatwierdzeniu
      aplikacji (punkt checklisty #59 w repozytorium ExpenseSplitter).
      Stoi tu, a nie niżej, bo po publikacji to jest powód, dla którego ktoś tu
@@ -36,22 +50,68 @@ footer a { color:var(--accent); }
      `AppStoreLinks.appURL` w aplikacji: dopóki nie ma ID, wejście się nie
      renderuje.
 
-     Oba pliki to ORYGINALNE odznaki Apple (Marketing Resources, wariant
-     polski, 119,66×40). Nie wolno ich przerysowywać, przekolorowywać ani
-     ściskać - wytyczne Apple dopuszczają wyłącznie skalowanie z zachowaniem
-     proporcji, przy wysokości nie mniejszej niż 40 px na ekranie i wolnym
-     marginesem co najmniej 1/10 wysokości dookoła (stąd `margin` w .badge).
-     Dwa warianty, bo czarna odznaka ginie na ciemnym tle strony.
-<a class="badge" href="https://apps.apple.com/pl/app/id0000000000">
+     Cztery pliki, bo odznaka ma napis W JĘZYKU: `appstore-{en,pl}-{black,white}.svg`.
+     To ORYGINALNE assety Apple (Marketing Resources, 119,66×40) - nie wolno ich
+     przerysowywać, przekolorowywać ani ściskać; wytyczne dopuszczają wyłącznie
+     skalowanie z zachowaniem proporcji, przy wysokości nie mniejszej niż 40 px
+     i wolnym marginesem co najmniej 1/10 wysokości dookoła (stąd `margin`
+     w .badge). Wariant czarny/biały wybiera `<picture>` po motywie systemu,
+     wariant językowy podmienia skrypt na dole - `id="badge"` jest tam po to.
+<a class="badge" id="badge" href="https://apps.apple.com/app/id0000000000">
   <picture>
-    <source srcset="/appstore-pl-white.svg" media="(prefers-color-scheme: dark)">
-    <img src="/appstore-pl-black.svg" alt="Pobierz w App Store" width="120" height="40">
+    <source srcset="/appstore-en-white.svg" media="(prefers-color-scheme: dark)">
+    <img src="/appstore-en-black.svg" alt="Download on the App Store" width="120" height="40">
   </picture>
 </a>
 -->
-<a class="card" href="/privacy/">Polityka prywatności<span>Privacy Policy</span></a>
-<a class="card" href="/terms/">Warunki korzystania<span>Terms of Use</span></a>
+<a class="card" href="/privacy/"><span data-en="Privacy Policy" data-pl="Polityka prywatności">Privacy Policy</span><span
+   data-en="Polityka prywatności" data-pl="Privacy Policy">Polityka prywatności</span></a>
+<a class="card" href="/terms/"><span data-en="Terms of Use" data-pl="Warunki korzystania">Terms of Use</span><span
+   data-en="Warunki korzystania" data-pl="Terms of Use">Warunki korzystania</span></a>
 <footer>Tomasz Socik · <a href="mailto:support@sharethetrip.pl">support@sharethetrip.pl</a></footer>
 </main>
+<script>
+// Angielski jest domyślny (życzenie właściciela, 19.08.2026): domena jest
+// polska, ale App Store nie jest. Wybór zapamiętuje `localStorage`, więc kto
+// raz przełączy na polski, dostaje polski przy każdym powrocie.
+//
+// ⚠️ Świadomie NIE wykrywamy języka przeglądarki. Automat, którego nie widać,
+// bywa mylący - a przełącznik i tak musi być widoczny, więc wykrywanie dokładałoby
+// tylko drugi, cichy mechanizm nad tym samym wyborem.
+(function () {
+  var LANGS = ['en', 'pl'];
+  var stored = null;
+  try { stored = localStorage.getItem('lang'); } catch (e) { /* tryb prywatny */ }
+  var lang = LANGS.indexOf(stored) >= 0 ? stored : 'en';
+
+  function apply(next) {
+    lang = next;
+    document.documentElement.lang = next;
+    // Same napisy - element trzyma oba warianty w data-*, więc nie ma tu
+    // słownika do rozjechania się z treścią strony.
+    document.querySelectorAll('[data-en][data-pl]').forEach(function (el) {
+      el.textContent = el.getAttribute('data-' + next);
+    });
+    document.querySelectorAll('nav.lang button').forEach(function (b) {
+      b.setAttribute('aria-current', String(b.dataset.lang === next));
+    });
+    // Odznaka App Store istnieje dopiero po odkomentowaniu bloku wyżej.
+    var badge = document.getElementById('badge');
+    if (badge) {
+      var img = badge.querySelector('img');
+      var src = badge.querySelector('source');
+      img.src = '/appstore-' + next + '-black.svg';
+      img.alt = next === 'pl' ? 'Pobierz w App Store' : 'Download on the App Store';
+      if (src) src.srcset = '/appstore-' + next + '-white.svg';
+    }
+    try { localStorage.setItem('lang', next); } catch (e) { /* tryb prywatny */ }
+  }
+
+  document.querySelectorAll('nav.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.lang); });
+  });
+  apply(lang);
+})();
+</script>
 </body>
 </html>
