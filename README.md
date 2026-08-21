@@ -1,12 +1,12 @@
-# sharethetrip.pl
+# travipool.com
 
-Strony publiczne aplikacji **Share the Trip**: polityka prywatności i warunki
+Strony publiczne aplikacji **TraviPool**: polityka prywatności i warunki
 korzystania, po polsku i po angielsku.
 
-- https://sharethetrip.pl/privacy/
-- https://sharethetrip.pl/terms/
+- https://travipool.com/privacy/
+- https://travipool.com/terms/
 
 Źródłem treści są dokumenty zatwierdzone przez właściciela. Zmiany merytoryczne
 wprowadza się w nich, nie tutaj — tu ląduje wynik.
 
-Adres kontaktowy: support@sharethetrip.pl
+Adres kontaktowy: support@travipool.com
