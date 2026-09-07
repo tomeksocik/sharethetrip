@@ -8,16 +8,13 @@
 <!-- Dane strukturalne (schema.org, JSON-LD). Mówią wyszukiwarce, że to strona
      APLIKACJI na iOS, a nie blog o podróżach.
 
-     ⚠️ Czego tu świadomie NIE MA i dlaczego: `offers`, `installUrl`
-     i `aggregateRating`. Bogaty wynik Google dla aplikacji wymaga oceny albo
-     recenzji (patrz dokumentacja „Software App"), a aplikacji nie ma jeszcze
-     w App Store - więc ocen nie ma. Wpisanie zmyślonych kończy się ręczną karą,
-     a nie lepszą pozycją. Do dnia publikacji ten blok opisuje więc encję
-     poprawnie, po prostu nie kwalifikuje się do bogatego wyniku.
-
-     W DNIU PUBLIKACJI dopisać (punkt checklisty #59): `installUrl` z linkiem
-     App Store, `offers` z ceną 0 PLN, a `aggregateRating` dopiero wtedy, gdy
-     w App Store faktycznie pojawią się oceny - nie wcześniej. -->
+     `installUrl` i `offers` (cena 0 PLN) dopisane 7.09.2026 po akceptacji
+     wersji 1.0 (punkt checklisty #59). ⚠️ Czego tu nadal świadomie NIE MA:
+     `aggregateRating`. Bogaty wynik Google dla aplikacji wymaga oceny albo
+     recenzji (patrz dokumentacja „Software App"), a ocen w App Store jeszcze
+     nie ma. Wpisanie zmyślonych kończy się ręczną karą, a nie lepszą pozycją.
+     Dopisać `aggregateRating` dopiero wtedy, gdy oceny faktycznie się pojawią
+     - nie wcześniej. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,7 +29,9 @@
       "inLanguage": ["pl", "en", "de", "es", "it", "fr"],
       "author": { "@id": "https://travipool.com/#author" },
       "publisher": { "@id": "https://travipool.com/#author" },
-      "url": "https://travipool.com/"
+      "url": "https://travipool.com/",
+      "installUrl": "https://apps.apple.com/app/id6800039461",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PLN" }
     },
     {
       "@type": "Person",
@@ -68,9 +67,8 @@ a.card { display:block; background:var(--card); border:1px solid var(--line);
 /* Drugi wiersz karty to ta sama nazwa w drugim języku - stąd `span + span`,
    nie `span`: od czasu przełącznika oba wiersze są elementami. */
 a.card span + span { display:block; color:var(--muted); font-size:.9rem; margin-top:.15rem; }
-.badge { display:inline-block; margin:0 4px .6rem; }
+.badge { display:inline-block; margin:0 4px 2.5rem; }
 .badge img { display:block; height:40px; width:auto; }
-p.soon { color:var(--muted); font-size:.85rem; margin:0 4px 2.5rem; }
 footer { margin-top:3rem; color:var(--muted); font-size:.85rem; }
 footer a { color:var(--accent); }
 /* Przełącznik języka: para przycisków w rogu, nie lista rozwijana - dwa języki
@@ -91,13 +89,13 @@ nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink);
 <h1>TraviPool</h1>
 <p class="lead" data-en="Split the cost of a trip with friends, on iPhone."
    data-pl="Rozliczanie kosztów wspólnej podróży na iPhone.">Split the cost of a trip with friends, on iPhone.</p>
-<!-- ⚠️ W DNIU PUBLIKACJI (punkt checklisty #59 w repozytorium ExpenseSplitter):
-     opakować `div.badge` w `<a href="https://apps.apple.com/app/idAPP_ID">`
-     i usunąć `p.soon` niżej. Do tego czasu odznaka jest CELOWO nieklikalna:
-     link do nieistniejącego ID kończy się błędem App Store, a wytyczne Apple
-     wiążą tę odznakę z aplikacją, którą da się pobrać. Dopisek „Wkrótce"
-     to decyzja właściciela z 19.08.2026 - świadomie pokazujemy odznakę
-     wcześniej, żeby strona mówiła, co powstaje.
+<!-- Odznaka podpięta 7.09.2026 po akceptacji wersji 1.0 przez App Review
+     (punkt checklisty #59 w repozytorium ExpenseSplitter, Apple ID 6800039461
+     od właściciela). Do tego dnia była CELOWO nieklikalna z dopiskiem „Wkrótce"
+     (decyzja właściciela z 19.08.2026): link do nieistniejącego ID kończy się
+     błędem App Store, a wytyczne Apple wiążą tę odznakę z aplikacją, którą da
+     się pobrać. Adres bez kodu kraju - App Store sam kieruje do sklepu
+     użytkownika. Odstęp pod odznaką przejął dawny `p.soon` (2.5rem w .badge).
 
      Cztery pliki, bo odznaka ma napis W JĘZYKU: `appstore-{en,pl}-{black,white}.svg`.
      To ORYGINALNE assety Apple (Marketing Resources, 119,66×40) - nie wolno ich
@@ -106,14 +104,12 @@ nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink);
      i wolnym marginesem co najmniej 1/10 wysokości dookoła (stąd `margin`
      w .badge). Wariant czarny/biały wybiera `<picture>` po motywie systemu,
      wariant językowy podmienia skrypt na dole - `id="badge"` jest tam po to. -->
-<div class="badge" id="badge">
+<a class="badge" id="badge" href="https://apps.apple.com/app/id6800039461">
   <picture>
     <source srcset="/appstore-en-white.svg" media="(prefers-color-scheme: dark)">
     <img src="/appstore-en-black.svg" alt="Download on the App Store" width="120" height="40">
   </picture>
-</div>
-<p class="soon" data-en="Coming soon to the App Store"
-   data-pl="Wkrótce w App Store">Coming soon to the App Store</p>
+</a>
 <a class="card" href="/privacy/"><span data-en="Privacy Policy" data-pl="Polityka prywatności">Privacy Policy</span><span
    data-en="Polityka prywatności" data-pl="Privacy Policy">Polityka prywatności</span></a>
 <a class="card" href="/terms/"><span data-en="Terms of Use" data-pl="Warunki korzystania">Terms of Use</span><span
@@ -145,7 +141,7 @@ nav.lang button[aria-current="true"] { background:var(--card); color:var(--ink);
     document.querySelectorAll('nav.lang button').forEach(function (b) {
       b.setAttribute('aria-current', String(b.dataset.lang === next));
     });
-    // Odznaka App Store istnieje dopiero po odkomentowaniu bloku wyżej.
+    // Odznaka App Store: od 7.09.2026 link `a#badge` (wcześniej nieklikalny div).
     var badge = document.getElementById('badge');
     if (badge) {
       var img = badge.querySelector('img');
